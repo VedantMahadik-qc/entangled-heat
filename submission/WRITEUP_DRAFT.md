@@ -1,0 +1,11 @@
+# "How it uses Atlas": draft (finalise after in-game testing)
+
+**Entangled Heat** replaces GTA V's single-player police response with a quantum one. Every police decision comes from a real measured shot returned by Moth Atlas.
+
+- **Quantum Drive Engine (`graph-v1`):** the 6 nearest police cars are qubits, prepared as three entangled pairs. Every collapse (when your wanted level changes, then every 20 s), one measured bitstring gives each car its order: `1` chase you, `0` race ahead and block the road. More stars mean stronger entanglement. At 1 star partners agree ~73% of the time, at 4 stars they're perfect Bell pairs, and at 5 stars the pairs are chained so the whole squad often moves as one. Wreck a car and its entangled partner **decoheres** and loses your trail. **From 4 stars the results are measured on real IBM quantum hardware** (e.g. `ibm_marrakesh`), and you can see the hardware noise: partners agree 95–99% of the time instead of 100%.
+- **Quantum Labyrinth (`labyrinth-v1`):** when you break line of sight, a 16-qubit search grid of the city blocks around your last known position collapses. Each block is searched or left alone, corridor correlations make the searched blocks cluster, and police roadblocks seal the edge of every searched cluster.
+- **Superposed safehouses:** your hideout exists in three places until you reach one. A measurement then decides which is real.
+
+**Atlas calls:** every collapse is measured from its own brand-new Atlas job. One job per star level (and for the search grid) is pre-fetched in the background, and the moment a collapse uses it the next one starts, so the game never waits (real jobs take ~4 s for `graph-v1` and ~7 s for `labyrinth-v1`). From 4 stars the same happens on IBM hardware: whenever a hardware job is ready, it decides the next collapse. A typical 10-minute chase calls about _N_ jobs *(measure in testing; the log counts them)*. The HUD shows every result's source (simulator, IBM or cached), job ID and bitstring. All jobs are logged to `EntangledHeat.log` and appear on the player's own Atlas account, because the mod uses their key.
+
+**Honest quantum:** shots are never reused or invented. Offline, the mod replays real cached Atlas jobs (the release ships real ones, including IBM runs) and labels them as cached. With no data at all, the police use the normal game AI.

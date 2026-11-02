@@ -1,0 +1,434 @@
+{
+  "engine": "graph-v1",
+  "job_id": "cec268b3-85ea-481b-a39e-5855ac7492bc",
+  "seconds": 5.78,
+  "request": {
+    "num_qubits": 6,
+    "coupling_map": [
+      [
+        0,
+        1
+      ],
+      [
+        2,
+        3
+      ],
+      [
+        4,
+        5
+      ],
+      [
+        1,
+        2
+      ],
+      [
+        3,
+        4
+      ]
+    ],
+    "operations": [
+      {
+        "type": "bloch",
+        "qubit": 0,
+        "paulis": {
+          "X": 1.0
+        }
+      },
+      {
+        "type": "bloch",
+        "qubit": 1,
+        "paulis": {
+          "X": 1.0
+        }
+      },
+      {
+        "type": "bloch",
+        "qubit": 2,
+        "paulis": {
+          "X": 1.0
+        }
+      },
+      {
+        "type": "bloch",
+        "qubit": 3,
+        "paulis": {
+          "X": 1.0
+        }
+      },
+      {
+        "type": "bloch",
+        "qubit": 4,
+        "paulis": {
+          "X": 1.0
+        }
+      },
+      {
+        "type": "bloch",
+        "qubit": 5,
+        "paulis": {
+          "X": 1.0
+        }
+      },
+      {
+        "type": "relationship",
+        "qubits": [
+          0,
+          1
+        ],
+        "paulis": {
+          "ZZ": 1.0
+        }
+      },
+      {
+        "type": "relationship",
+        "qubits": [
+          2,
+          3
+        ],
+        "paulis": {
+          "ZZ": 1.0
+        }
+      },
+      {
+        "type": "relationship",
+        "qubits": [
+          4,
+          5
+        ],
+        "paulis": {
+          "ZZ": 1.0
+        }
+      },
+      {
+        "type": "relationship",
+        "qubits": [
+          1,
+          2
+        ],
+        "paulis": {
+          "ZZ": -1.0
+        }
+      },
+      {
+        "type": "relationship",
+        "qubits": [
+          3,
+          4
+        ],
+        "paulis": {
+          "ZZ": -1.0
+        }
+      },
+      {
+        "type": "bloch",
+        "qubit": 0,
+        "paulis": {
+          "Z": -0.4
+        }
+      },
+      {
+        "type": "bloch",
+        "qubit": 1,
+        "paulis": {
+          "Z": -0.4
+        }
+      },
+      {
+        "type": "bloch",
+        "qubit": 2,
+        "paulis": {
+          "Z": -0.4
+        }
+      },
+      {
+        "type": "bloch",
+        "qubit": 3,
+        "paulis": {
+          "Z": -0.4
+        }
+      },
+      {
+        "type": "bloch",
+        "qubit": 4,
+        "paulis": {
+          "Z": -0.4
+        }
+      },
+      {
+        "type": "bloch",
+        "qubit": 5,
+        "paulis": {
+          "Z": -0.4
+        }
+      }
+    ],
+    "shots": 1024,
+    "mode": "emu"
+  },
+  "result": {
+    "$schema": "https://api.mothquantum.com/schemas/JobResultOutputBody.json",
+    "result": {
+      "output": {
+        "backend": "aer",
+        "coupling_map": [
+          [
+            0,
+            1
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            3,
+            4
+          ]
+        ],
+        "dominant_bitstring": "110011",
+        "edge_agreement_score": 0.6,
+        "ibm_job_id": null,
+        "io": {
+          "backend": null,
+          "dynamical_decoupling": null,
+          "emu_trajectories": null,
+          "error_mitigation": null,
+          "initial_layout": null,
+          "layout": null,
+          "mode": "sim",
+          "optimization_level": null,
+          "precision": null,
+          "provider": null,
+          "routing": null,
+          "seed": null,
+          "seed_sampler": null,
+          "seed_transpiler": null,
+          "shots": 1024,
+          "sim_noise": null,
+          "store": true,
+          "time_budget": false,
+          "transpile_mode": null,
+          "twirling": null
+        },
+        "io_report": {
+          "applied": [
+            "backend=None",
+            "mode=sim",
+            "provider=None",
+            "shots=1024",
+            "store=True",
+            "time_budget=False"
+          ],
+          "ignored": [],
+          "unsupported": []
+        },
+        "measurements": [
+          {
+            "bitstring": "110011",
+            "count": 84,
+            "probability": 0.08203125
+          },
+          {
+            "bitstring": "000011",
+            "count": 68,
+            "probability": 0.06640625
+          },
+          {
+            "bitstring": "001100",
+            "count": 53,
+            "probability": 0.0517578125
+          },
+          {
+            "bitstring": "001001",
+            "count": 51,
+            "probability": 0.0498046875
+          },
+          {
+            "bitstring": "110100",
+            "count": 45,
+            "probability": 0.0439453125
+          },
+          {
+            "bitstring": "000100",
+            "count": 42,
+            "probability": 0.041015625
+          },
+          {
+            "bitstring": "111110",
+            "count": 40,
+            "probability": 0.0390625
+          },
+          {
+            "bitstring": "011011",
+            "count": 39,
+            "probability": 0.0380859375
+          },
+          {
+            "bitstring": "110000",
+            "count": 39,
+            "probability": 0.0380859375
+          },
+          {
+            "bitstring": "001111",
+            "count": 38,
+            "probability": 0.037109375
+          },
+          {
+            "bitstring": "111001",
+            "count": 38,
+            "probability": 0.037109375
+          },
+          {
+            "bitstring": "001110",
+            "count": 36,
+            "probability": 0.03515625
+          },
+          {
+            "bitstring": "100001",
+            "count": 32,
+            "probability": 0.03125
+          },
+          {
+            "bitstring": "100100",
+            "count": 32,
+            "probability": 0.03125
+          },
+          {
+            "bitstring": "000000",
+            "count": 30,
+            "probability": 0.029296875
+          },
+          {
+            "bitstring": "001101",
+            "count": 24,
+            "probability": 0.0234375
+          },
+          {
+            "bitstring": "111111",
+            "count": 22,
+            "probability": 0.021484375
+          },
+          {
+            "bitstring": "100111",
+            "count": 20,
+            "probability": 0.01953125
+          },
+          {
+            "bitstring": "101100",
+            "count": 18,
+            "probability": 0.017578125
+          },
+          {
+            "bitstring": "011110",
+            "count": 17,
+            "probability": 0.0166015625
+          }
+        ],
+        "mode": "emu",
+        "num_qubits": 6,
+        "provider_job_id": null,
+        "qpu_seconds": null,
+        "seed": null,
+        "shots": 1024,
+        "tomography": {
+          "bloch": {
+            "0": {
+              "X": 1.938367937131261e-18,
+              "Y": -2.7565701199206363e-17,
+              "Z": -1.282829773077011e-14
+            },
+            "1": {
+              "X": -4.426292100570738e-17,
+              "Y": -9.244463733058732e-33,
+              "Z": -5.5491853047145544e-17
+            },
+            "2": {
+              "X": -2.2623329040645543e-16,
+              "Y": -3.4666738998970245e-32,
+              "Z": -9.589313203602315e-17
+            },
+            "3": {
+              "X": -4.426292100570738e-17,
+              "Y": -9.244463733058732e-33,
+              "Z": -5.5491853047145544e-17
+            },
+            "4": {
+              "X": -2.2623329040645543e-16,
+              "Y": -3.4666738998970245e-32,
+              "Z": -9.589313203602315e-17
+            },
+            "5": {
+              "X": 2.875633792851576e-19,
+              "Y": 4.120242273603874e-18,
+              "Z": -1.2827726290960163e-14
+            }
+          },
+          "relationships": {
+            "0,1": {
+              "XX": -0.2535339503400942,
+              "XY": 0.7435274520708184,
+              "XZ": -0.02554185602337361,
+              "YX": -0.10682019035829537,
+              "YY": 0.3132667000229475,
+              "YZ": -0.010761422361230302,
+              "ZX": 0.0002967311808438847,
+              "ZY": -0.0008702099996740689,
+              "ZZ": 2.9893689143380873e-05
+            },
+            "1,2": {
+              "XX": -1.2826136160677002e-14,
+              "XY": -7.916610262396727e-17,
+              "XZ": 5.427450707403254e-17,
+              "YX": 7.041454846843317e-18,
+              "YY": 7.331304817923895e-15,
+              "YZ": 1.0512879443355054e-14,
+              "ZX": 1.6474726725732606e-16,
+              "ZY": -2.7769230674531685e-16,
+              "ZZ": -3.989975082163118e-16
+            },
+            "2,3": {
+              "XX": -2.664875676647305e-20,
+              "XY": 7.81515934763736e-20,
+              "XZ": -2.6846846649736066e-21,
+              "YX": -3.1168071219837314e-18,
+              "YY": 9.140518084051887e-18,
+              "YZ": -3.1399754808200316e-19,
+              "ZX": 2.1056480590342578e-18,
+              "ZY": -6.175138020732426e-18,
+              "ZZ": 2.1213001054732968e-19
+            },
+            "3,4": {
+              "XX": -1.2826136160677002e-14,
+              "XY": -7.916610262396727e-17,
+              "XZ": 5.427450707403254e-17,
+              "YX": 7.041454846843317e-18,
+              "YY": 7.331304817923895e-15,
+              "YZ": 1.0512879443355054e-14,
+              "ZX": 1.6474726725732606e-16,
+              "ZY": -2.7769230674531685e-16,
+              "ZZ": -3.989975082163118e-16
+            },
+            "4,5": {
+              "XX": 8.926911645066947e-20,
+              "XY": -3.758700166314005e-20,
+              "XZ": -2.2462262604394326e-21,
+              "YX": 1.0440810442481348e-17,
+              "YY": -4.3961313281612905e-18,
+              "YZ": -2.627159711996434e-19,
+              "ZX": -7.053587656384393e-18,
+              "ZY": 2.9699320606374067e-18,
+              "ZZ": 1.774852768193042e-19
+            }
+          }
+        }
+      }
+    }
+  }
+}

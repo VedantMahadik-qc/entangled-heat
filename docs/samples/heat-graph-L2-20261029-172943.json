@@ -1,0 +1,337 @@
+{
+  "engine": "graph-v1",
+  "job_id": "81658c25-a4c9-4c18-8b3b-0a4111dd564c",
+  "seconds": 5.64,
+  "request": {
+    "num_qubits": 6,
+    "coupling_map": [
+      [
+        0,
+        1
+      ],
+      [
+        2,
+        3
+      ],
+      [
+        4,
+        5
+      ]
+    ],
+    "operations": [
+      {
+        "type": "bloch",
+        "qubit": 0,
+        "paulis": {
+          "X": 1.0
+        }
+      },
+      {
+        "type": "bloch",
+        "qubit": 1,
+        "paulis": {
+          "X": 1.0
+        }
+      },
+      {
+        "type": "bloch",
+        "qubit": 2,
+        "paulis": {
+          "X": 1.0
+        }
+      },
+      {
+        "type": "bloch",
+        "qubit": 3,
+        "paulis": {
+          "X": 1.0
+        }
+      },
+      {
+        "type": "bloch",
+        "qubit": 4,
+        "paulis": {
+          "X": 1.0
+        }
+      },
+      {
+        "type": "bloch",
+        "qubit": 5,
+        "paulis": {
+          "X": 1.0
+        }
+      },
+      {
+        "type": "relationship",
+        "qubits": [
+          0,
+          1
+        ],
+        "paulis": {
+          "ZZ": 1.0
+        },
+        "fraction": 0.25
+      },
+      {
+        "type": "relationship",
+        "qubits": [
+          2,
+          3
+        ],
+        "paulis": {
+          "ZZ": 1.0
+        },
+        "fraction": 0.25
+      },
+      {
+        "type": "relationship",
+        "qubits": [
+          4,
+          5
+        ],
+        "paulis": {
+          "ZZ": 1.0
+        },
+        "fraction": 0.25
+      }
+    ],
+    "shots": 1024,
+    "mode": "emu"
+  },
+  "result": {
+    "$schema": "https://api.mothquantum.com/schemas/JobResultOutputBody.json",
+    "result": {
+      "output": {
+        "backend": "aer",
+        "coupling_map": [
+          [
+            0,
+            1
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            4,
+            5
+          ]
+        ],
+        "dominant_bitstring": "111111",
+        "edge_agreement_score": 1,
+        "ibm_job_id": null,
+        "io": {
+          "backend": null,
+          "dynamical_decoupling": null,
+          "emu_trajectories": null,
+          "error_mitigation": null,
+          "initial_layout": null,
+          "layout": null,
+          "mode": "sim",
+          "optimization_level": null,
+          "precision": null,
+          "provider": null,
+          "routing": null,
+          "seed": null,
+          "seed_sampler": null,
+          "seed_transpiler": null,
+          "shots": 1024,
+          "sim_noise": null,
+          "store": true,
+          "time_budget": false,
+          "transpile_mode": null,
+          "twirling": null
+        },
+        "io_report": {
+          "applied": [
+            "backend=None",
+            "mode=sim",
+            "provider=None",
+            "shots=1024",
+            "store=True",
+            "time_budget=False"
+          ],
+          "ignored": [],
+          "unsupported": []
+        },
+        "measurements": [
+          {
+            "bitstring": "111111",
+            "count": 54,
+            "probability": 0.052734375
+          },
+          {
+            "bitstring": "001111",
+            "count": 53,
+            "probability": 0.0517578125
+          },
+          {
+            "bitstring": "110011",
+            "count": 50,
+            "probability": 0.048828125
+          },
+          {
+            "bitstring": "111100",
+            "count": 42,
+            "probability": 0.041015625
+          },
+          {
+            "bitstring": "001100",
+            "count": 41,
+            "probability": 0.0400390625
+          },
+          {
+            "bitstring": "000000",
+            "count": 32,
+            "probability": 0.03125
+          },
+          {
+            "bitstring": "110000",
+            "count": 28,
+            "probability": 0.02734375
+          },
+          {
+            "bitstring": "111011",
+            "count": 28,
+            "probability": 0.02734375
+          },
+          {
+            "bitstring": "000011",
+            "count": 27,
+            "probability": 0.0263671875
+          },
+          {
+            "bitstring": "001011",
+            "count": 27,
+            "probability": 0.0263671875
+          },
+          {
+            "bitstring": "101111",
+            "count": 26,
+            "probability": 0.025390625
+          },
+          {
+            "bitstring": "111101",
+            "count": 25,
+            "probability": 0.0244140625
+          },
+          {
+            "bitstring": "011111",
+            "count": 24,
+            "probability": 0.0234375
+          },
+          {
+            "bitstring": "111110",
+            "count": 24,
+            "probability": 0.0234375
+          },
+          {
+            "bitstring": "100011",
+            "count": 23,
+            "probability": 0.0224609375
+          },
+          {
+            "bitstring": "111000",
+            "count": 23,
+            "probability": 0.0224609375
+          },
+          {
+            "bitstring": "001110",
+            "count": 21,
+            "probability": 0.0205078125
+          },
+          {
+            "bitstring": "000010",
+            "count": 20,
+            "probability": 0.01953125
+          },
+          {
+            "bitstring": "011100",
+            "count": 20,
+            "probability": 0.01953125
+          },
+          {
+            "bitstring": "100000",
+            "count": 20,
+            "probability": 0.01953125
+          }
+        ],
+        "mode": "emu",
+        "num_qubits": 6,
+        "provider_job_id": null,
+        "qpu_seconds": null,
+        "seed": null,
+        "shots": 1024,
+        "tomography": {
+          "bloch": {
+            "0": {
+              "X": 0.9226506741320879,
+              "Y": -1.740568293992467e-15,
+              "Z": -0.09016108321453159
+            },
+            "1": {
+              "X": 0.9249788899976289,
+              "Y": 1.2121647377132177e-13,
+              "Z": -0.06186550300101233
+            },
+            "2": {
+              "X": 0.9226506741320879,
+              "Y": -1.740568293992467e-15,
+              "Z": -0.09016108321453159
+            },
+            "3": {
+              "X": 0.9249788899976289,
+              "Y": 1.2121647377132177e-13,
+              "Z": -0.06186550300101233
+            },
+            "4": {
+              "X": 0.9226506741320879,
+              "Y": -1.740568293992467e-15,
+              "Z": -0.09016108321453159
+            },
+            "5": {
+              "X": 0.9249788899976289,
+              "Y": 1.2121647377132177e-13,
+              "Z": -0.06186550300101233
+            }
+          },
+          "relationships": {
+            "0,1": {
+              "XX": 0.9954742636314241,
+              "XY": 1.270970011297411e-13,
+              "XZ": -0.03003280741216724,
+              "YX": 4.5439679065429986e-14,
+              "YY": -0.37494894665432277,
+              "YZ": -2.7134297443578023e-14,
+              "ZX": -0.07213632916849719,
+              "ZY": -3.657582221522735e-14,
+              "ZZ": 0.37882988733427314
+            },
+            "2,3": {
+              "XX": 0.9954742636314241,
+              "XY": 1.270970011297411e-13,
+              "XZ": -0.03003280741216724,
+              "YX": 4.5439679065429986e-14,
+              "YY": -0.37494894665432277,
+              "YZ": -2.7134297443578023e-14,
+              "ZX": -0.07213632916849719,
+              "ZY": -3.657582221522735e-14,
+              "ZZ": 0.37882988733427314
+            },
+            "4,5": {
+              "XX": 0.9954742636314241,
+              "XY": 1.270970011297411e-13,
+              "XZ": -0.03003280741216724,
+              "YX": 4.5439679065429986e-14,
+              "YY": -0.37494894665432277,
+              "YZ": -2.7134297443578023e-14,
+              "ZX": -0.07213632916849719,
+              "ZY": -3.657582221522735e-14,
+              "ZZ": 0.37882988733427314
+            }
+          }
+        }
+      }
+    }
+  }
+}

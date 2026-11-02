@@ -1,0 +1,337 @@
+{
+  "engine": "graph-v1",
+  "job_id": "45034ed3-3037-467f-8099-b39e10028748",
+  "seconds": 5.35,
+  "request": {
+    "num_qubits": 6,
+    "coupling_map": [
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        2
+      ],
+      [
+        2,
+        3
+      ],
+      [
+        3,
+        4
+      ],
+      [
+        4,
+        5
+      ]
+    ],
+    "operations": [
+      {
+        "type": "bloch",
+        "qubit": 0,
+        "paulis": {
+          "X": 1.0
+        }
+      },
+      {
+        "type": "bloch",
+        "qubit": 1,
+        "paulis": {
+          "X": 1.0
+        }
+      },
+      {
+        "type": "bloch",
+        "qubit": 2,
+        "paulis": {
+          "X": 1.0
+        }
+      },
+      {
+        "type": "bloch",
+        "qubit": 3,
+        "paulis": {
+          "X": 1.0
+        }
+      },
+      {
+        "type": "bloch",
+        "qubit": 4,
+        "paulis": {
+          "X": 1.0
+        }
+      },
+      {
+        "type": "bloch",
+        "qubit": 5,
+        "paulis": {
+          "X": 1.0
+        }
+      },
+      {
+        "type": "relationship",
+        "qubits": [
+          0,
+          1
+        ],
+        "paulis": {
+          "ZZ": 1.0
+        },
+        "fraction": 1.0
+      },
+      {
+        "type": "relationship",
+        "qubits": [
+          1,
+          2
+        ],
+        "paulis": {
+          "ZZ": 1.0
+        },
+        "fraction": 0.25
+      },
+      {
+        "type": "relationship",
+        "qubits": [
+          2,
+          3
+        ],
+        "paulis": {
+          "ZZ": 1.0
+        },
+        "fraction": 1.0
+      },
+      {
+        "type": "relationship",
+        "qubits": [
+          3,
+          4
+        ],
+        "paulis": {
+          "ZZ": 1.0
+        },
+        "fraction": 0.25
+      },
+      {
+        "type": "relationship",
+        "qubits": [
+          4,
+          5
+        ],
+        "paulis": {
+          "ZZ": 1.0
+        },
+        "fraction": 1.0
+      }
+    ],
+    "shots": 1024,
+    "mode": "emu"
+  },
+  "result": {
+    "$schema": "https://api.mothquantum.com/schemas/JobResultOutputBody.json",
+    "result": {
+      "output": {
+        "backend": "aer",
+        "coupling_map": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            4,
+            5
+          ]
+        ],
+        "dominant_bitstring": "111111",
+        "edge_agreement_score": 1,
+        "ibm_job_id": null,
+        "io": {
+          "backend": null,
+          "dynamical_decoupling": null,
+          "emu_trajectories": null,
+          "error_mitigation": null,
+          "initial_layout": null,
+          "layout": null,
+          "mode": "sim",
+          "optimization_level": null,
+          "precision": null,
+          "provider": null,
+          "routing": null,
+          "seed": null,
+          "seed_sampler": null,
+          "seed_transpiler": null,
+          "shots": 1024,
+          "sim_noise": null,
+          "store": true,
+          "time_budget": false,
+          "transpile_mode": null,
+          "twirling": null
+        },
+        "io_report": {
+          "applied": [
+            "backend=None",
+            "mode=sim",
+            "provider=None",
+            "shots=1024",
+            "store=True",
+            "time_budget=False"
+          ],
+          "ignored": [],
+          "unsupported": []
+        },
+        "measurements": [
+          {
+            "bitstring": "111111",
+            "count": 262,
+            "probability": 0.255859375
+          },
+          {
+            "bitstring": "000000",
+            "count": 243,
+            "probability": 0.2373046875
+          },
+          {
+            "bitstring": "000011",
+            "count": 119,
+            "probability": 0.1162109375
+          },
+          {
+            "bitstring": "110000",
+            "count": 115,
+            "probability": 0.1123046875
+          },
+          {
+            "bitstring": "001111",
+            "count": 94,
+            "probability": 0.091796875
+          },
+          {
+            "bitstring": "111100",
+            "count": 89,
+            "probability": 0.0869140625
+          },
+          {
+            "bitstring": "001100",
+            "count": 55,
+            "probability": 0.0537109375
+          },
+          {
+            "bitstring": "110011",
+            "count": 47,
+            "probability": 0.0458984375
+          }
+        ],
+        "mode": "emu",
+        "num_qubits": 6,
+        "provider_job_id": null,
+        "qpu_seconds": null,
+        "seed": null,
+        "shots": 1024,
+        "tomography": {
+          "bloch": {
+            "0": {
+              "X": -8.998228579809178e-16,
+              "Y": 1.2796460135444263e-14,
+              "Z": -8.314517830473975e-17
+            },
+            "1": {
+              "X": -6.084010100088356e-16,
+              "Y": -1.181600805756594e-14,
+              "Z": -5.964145491954629e-17
+            },
+            "2": {
+              "X": -2.0214560696288428e-30,
+              "Y": 9.691410233595705e-16,
+              "Z": -1.227342270535e-15
+            },
+            "3": {
+              "X": 2.1671690927664452e-16,
+              "Y": -9.755205735272074e-16,
+              "Z": -1.2273422705349987e-15
+            },
+            "4": {
+              "X": -2.2186712959340957e-31,
+              "Y": -3.537136259752004e-16,
+              "Z": -1.3292749930372118e-15
+            },
+            "5": {
+              "X": -9.49042677420497e-31,
+              "Y": 3.8285686989269484e-16,
+              "Z": -1.3292749930372126e-15
+            }
+          },
+          "relationships": {
+            "0,1": {
+              "XX": 5.066850269314639e-31,
+              "XY": 1.1360499318618498e-29,
+              "XZ": 7.216449660063518e-16,
+              "YX": -7.074102391953769e-30,
+              "YY": -1.6390764583107028e-28,
+              "YZ": -1.2590463369832708e-14,
+              "ZX": -5.64933043443478e-17,
+              "ZY": 1.0090629224004776e-15,
+              "ZZ": 1.0000000000000002
+            },
+            "1,2": {
+              "XX": 5.171493550814598e-30,
+              "XY": -9.485791422178521e-31,
+              "XZ": -2.1619051612167868e-17,
+              "YX": -1.2366681158796513e-30,
+              "YY": -1.321395223265802e-29,
+              "YZ": 3.8615166261658484e-16,
+              "ZX": -3.2635865517438657e-16,
+              "ZY": 2.0753437818084237e-16,
+              "ZZ": 0.38268343236509034
+            },
+            "2,3": {
+              "XX": -9.261101776427603e-32,
+              "XY": -5.070906081854565e-30,
+              "XZ": -9.659588754641893e-16,
+              "YX": -2.643300498606568e-32,
+              "YY": -1.8262941977234303e-29,
+              "YZ": -3.298822079547178e-15,
+              "ZX": 7.168081409659231e-17,
+              "ZY": 5.249608664155352e-15,
+              "ZZ": 1
+            },
+            "3,4": {
+              "XX": -1.25323701936474e-31,
+              "XY": -1.6443412377581507e-32,
+              "XZ": 2.7431059973203507e-17,
+              "YX": 1.8459541175401165e-30,
+              "YY": 4.811315881563491e-30,
+              "YZ": 2.0089382621724923e-15,
+              "ZX": 3.134791873680134e-16,
+              "ZY": 8.400059649388143e-16,
+              "ZZ": 0.38268343236509034
+            },
+            "4,5": {
+              "XX": 0.9238795325112867,
+              "XY": 1.6615899574803243e-15,
+              "XZ": -1.4092702299852266e-18,
+              "YX": 1.6615899574803263e-15,
+              "YY": -0.9238795325112867,
+              "YZ": 2.2516126737429764e-15,
+              "ZX": 1.313727140345648e-16,
+              "ZY": 2.089186132986945e-15,
+              "ZZ": 1
+            }
+          }
+        }
+      }
+    }
+  }
+}

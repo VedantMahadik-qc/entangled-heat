@@ -1,0 +1,337 @@
+{
+  "engine": "graph-v1",
+  "job_id": "0d7ec34f-8bb0-459e-b97c-31bd4d1f1373",
+  "seconds": 5.52,
+  "request": {
+    "num_qubits": 6,
+    "coupling_map": [
+      [
+        0,
+        1
+      ],
+      [
+        2,
+        3
+      ],
+      [
+        4,
+        5
+      ]
+    ],
+    "operations": [
+      {
+        "type": "bloch",
+        "qubit": 0,
+        "paulis": {
+          "X": 1.0
+        }
+      },
+      {
+        "type": "bloch",
+        "qubit": 1,
+        "paulis": {
+          "X": 1.0
+        }
+      },
+      {
+        "type": "bloch",
+        "qubit": 2,
+        "paulis": {
+          "X": 1.0
+        }
+      },
+      {
+        "type": "bloch",
+        "qubit": 3,
+        "paulis": {
+          "X": 1.0
+        }
+      },
+      {
+        "type": "bloch",
+        "qubit": 4,
+        "paulis": {
+          "X": 1.0
+        }
+      },
+      {
+        "type": "bloch",
+        "qubit": 5,
+        "paulis": {
+          "X": 1.0
+        }
+      },
+      {
+        "type": "relationship",
+        "qubits": [
+          0,
+          1
+        ],
+        "paulis": {
+          "ZZ": 1.0
+        },
+        "fraction": 0.1
+      },
+      {
+        "type": "relationship",
+        "qubits": [
+          2,
+          3
+        ],
+        "paulis": {
+          "ZZ": 1.0
+        },
+        "fraction": 0.1
+      },
+      {
+        "type": "relationship",
+        "qubits": [
+          4,
+          5
+        ],
+        "paulis": {
+          "ZZ": 1.0
+        },
+        "fraction": 0.1
+      }
+    ],
+    "shots": 1024,
+    "mode": "emu"
+  },
+  "result": {
+    "$schema": "https://api.mothquantum.com/schemas/JobResultOutputBody.json",
+    "result": {
+      "output": {
+        "backend": "aer",
+        "coupling_map": [
+          [
+            0,
+            1
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            4,
+            5
+          ]
+        ],
+        "dominant_bitstring": "111100",
+        "edge_agreement_score": 1,
+        "ibm_job_id": null,
+        "io": {
+          "backend": null,
+          "dynamical_decoupling": null,
+          "emu_trajectories": null,
+          "error_mitigation": null,
+          "initial_layout": null,
+          "layout": null,
+          "mode": "sim",
+          "optimization_level": null,
+          "precision": null,
+          "provider": null,
+          "routing": null,
+          "seed": null,
+          "seed_sampler": null,
+          "seed_transpiler": null,
+          "shots": 1024,
+          "sim_noise": null,
+          "store": true,
+          "time_budget": false,
+          "transpile_mode": null,
+          "twirling": null
+        },
+        "io_report": {
+          "applied": [
+            "backend=None",
+            "mode=sim",
+            "provider=None",
+            "shots=1024",
+            "store=True",
+            "time_budget=False"
+          ],
+          "ignored": [],
+          "unsupported": []
+        },
+        "measurements": [
+          {
+            "bitstring": "111100",
+            "count": 46,
+            "probability": 0.044921875
+          },
+          {
+            "bitstring": "001111",
+            "count": 31,
+            "probability": 0.0302734375
+          },
+          {
+            "bitstring": "111000",
+            "count": 31,
+            "probability": 0.0302734375
+          },
+          {
+            "bitstring": "110011",
+            "count": 27,
+            "probability": 0.0263671875
+          },
+          {
+            "bitstring": "101111",
+            "count": 26,
+            "probability": 0.025390625
+          },
+          {
+            "bitstring": "110010",
+            "count": 26,
+            "probability": 0.025390625
+          },
+          {
+            "bitstring": "001000",
+            "count": 24,
+            "probability": 0.0234375
+          },
+          {
+            "bitstring": "000001",
+            "count": 23,
+            "probability": 0.0224609375
+          },
+          {
+            "bitstring": "110001",
+            "count": 23,
+            "probability": 0.0224609375
+          },
+          {
+            "bitstring": "001110",
+            "count": 22,
+            "probability": 0.021484375
+          },
+          {
+            "bitstring": "000011",
+            "count": 21,
+            "probability": 0.0205078125
+          },
+          {
+            "bitstring": "111011",
+            "count": 21,
+            "probability": 0.0205078125
+          },
+          {
+            "bitstring": "111111",
+            "count": 21,
+            "probability": 0.0205078125
+          },
+          {
+            "bitstring": "001100",
+            "count": 20,
+            "probability": 0.01953125
+          },
+          {
+            "bitstring": "011110",
+            "count": 19,
+            "probability": 0.0185546875
+          },
+          {
+            "bitstring": "110101",
+            "count": 19,
+            "probability": 0.0185546875
+          },
+          {
+            "bitstring": "010000",
+            "count": 18,
+            "probability": 0.017578125
+          },
+          {
+            "bitstring": "011100",
+            "count": 18,
+            "probability": 0.017578125
+          },
+          {
+            "bitstring": "100100",
+            "count": 18,
+            "probability": 0.017578125
+          },
+          {
+            "bitstring": "110110",
+            "count": 18,
+            "probability": 0.017578125
+          }
+        ],
+        "mode": "emu",
+        "num_qubits": 6,
+        "provider_job_id": null,
+        "qpu_seconds": null,
+        "seed": null,
+        "shots": 1024,
+        "tomography": {
+          "bloch": {
+            "0": {
+              "X": 0.9875341152399052,
+              "Y": 3.22612137920356e-14,
+              "Z": -0.04104148948625491
+            },
+            "1": {
+              "X": 0.9880662599441448,
+              "Y": 8.166027224605186e-13,
+              "Z": -0.02516145031397375
+            },
+            "2": {
+              "X": 0.9875341152399052,
+              "Y": 3.22612137920356e-14,
+              "Z": -0.04104148948625491
+            },
+            "3": {
+              "X": 0.9880662599441448,
+              "Y": 8.166027224605186e-13,
+              "Z": -0.02516145031397375
+            },
+            "4": {
+              "X": 0.9875341152399052,
+              "Y": 3.22612137920356e-14,
+              "Z": -0.04104148948625491
+            },
+            "5": {
+              "X": 0.9880662599441448,
+              "Y": 8.166027224605186e-13,
+              "Z": -0.02516145031397375
+            }
+          },
+          "relationships": {
+            "0,1": {
+              "XX": 0.9989743467975472,
+              "XY": 8.30418457557967e-13,
+              "XZ": -0.01912722094721997,
+              "YX": 1.5812461363038186e-13,
+              "YY": -0.15196041385205272,
+              "YZ": -4.56674212061559e-15,
+              "ZX": -0.03764513060824169,
+              "ZY": -3.5052165853143295e-14,
+              "ZZ": 0.15283721856545915
+            },
+            "2,3": {
+              "XX": 0.9989743467975472,
+              "XY": 8.30418457557967e-13,
+              "XZ": -0.01912722094721997,
+              "YX": 1.5812461363038186e-13,
+              "YY": -0.15196041385205272,
+              "YZ": -4.56674212061559e-15,
+              "ZX": -0.03764513060824169,
+              "ZY": -3.5052165853143295e-14,
+              "ZZ": 0.15283721856545915
+            },
+            "4,5": {
+              "XX": 0.9989743467975472,
+              "XY": 8.30418457557967e-13,
+              "XZ": -0.01912722094721997,
+              "YX": 1.5812461363038186e-13,
+              "YY": -0.15196041385205272,
+              "YZ": -4.56674212061559e-15,
+              "ZX": -0.03764513060824169,
+              "ZY": -3.5052165853143295e-14,
+              "ZZ": 0.15283721856545915
+            }
+          }
+        }
+      }
+    }
+  }
+}

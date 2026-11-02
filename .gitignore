@@ -1,0 +1,19 @@
+# Secrets - never commit the real API key
+EntangledHeat.ini
+SchrodingersStash.ini
+*.env
+.env*
+
+# Logs and build output
+*.log
+bin/
+obj/
+release/
+*.user
+.vs/
+
+# Footage (large; Moth's own demo video is theirs, not ours)
+*.mp4
+*.mkv
+__pycache__/
+docs/samples/*.tmp
