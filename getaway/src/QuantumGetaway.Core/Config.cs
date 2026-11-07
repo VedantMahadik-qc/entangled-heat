@@ -20,6 +20,9 @@ namespace QuantumGetaway.Core
         /// </summary>
         public string OrbMode { get; private set; } = "fake";
 
+        /// <summary>Also run orb pairs on real IBM hardware; its shots take over whenever a job has finished.</summary>
+        public bool OrbHardware { get; private set; } = true;
+
         /// <summary>The IBM chip for fake/qpu (e.g. marrakesh, fez). For qpu, empty means least busy.</summary>
         public string Backend { get; private set; } = "marrakesh";
 
@@ -73,6 +76,7 @@ namespace QuantumGetaway.Core
             c.Mode = mode == "sim" || mode == "fake" || mode == "qpu" ? mode : c.Mode;
             var orbMode = Get(ini, "Atlas", "OrbMode", c.OrbMode).Trim().ToLowerInvariant();
             c.OrbMode = orbMode == "emu" || orbMode == "fake" || orbMode == "qpu" ? orbMode : c.OrbMode;
+            c.OrbHardware = GetBool(ini, "Atlas", "OrbHardware", c.OrbHardware);
             c.Backend = Get(ini, "Atlas", "Backend", c.Backend).Trim();
 
             c.TunnelKey = Get(ini, "Gameplay", "TunnelKey", c.TunnelKey).Trim();

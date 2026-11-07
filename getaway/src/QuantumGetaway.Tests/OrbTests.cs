@@ -132,6 +132,7 @@ namespace QuantumGetaway.Tests
         {
             public int Jobs;
             public string LastMode;
+            public bool FailHardware;
 
             public Task<string> UploadAsync(byte[] data, string filename, string contentType, CancellationToken ct) =>
                 throw new InvalidOperationException("graph-v1 needs no upload");
@@ -141,8 +142,12 @@ namespace QuantumGetaway.Tests
                 Assert.Equal("graph-v1", engineId);
                 Assert.Null(inputFiles);
                 LastMode = (string)parameters["mode"];
+                if (LastMode == "qpu" && FailHardware)
+                    throw new AtlasException("job x failed: allocation not active");
                 var n = Interlocked.Increment(ref Jobs);
-                var body = JObject.Parse("{\"result\":{\"output\":{\"measurements\":[{\"bitstring\":\"100110\",\"count\":3},{\"bitstring\":\"011001\",\"count\":2}]}}}");
+                var body = LastMode == "qpu"
+                    ? JObject.Parse("{\"result\":{\"output\":{\"backend\":\"ibm_test\",\"measurements\":[{\"bitstring\":\"101010\",\"count\":2}]}}}")
+                    : JObject.Parse("{\"result\":{\"output\":{\"measurements\":[{\"bitstring\":\"100110\",\"count\":3},{\"bitstring\":\"011001\",\"count\":2}]}}}");
                 return Task.FromResult(new AtlasJobResult { JobId = $"orbs-{n}", Body = body, Elapsed = TimeSpan.FromSeconds(4) });
             }
 
@@ -154,7 +159,7 @@ namespace QuantumGetaway.Tests
         {
             var dir = Path.Combine(Path.GetTempPath(), "qg-orbs-" + Guid.NewGuid().ToString("N"));
             var atlas = new FakeGraph();
-            var pool = new OrbPool(atlas, Config.Parse(""), dir);
+            var pool = new OrbPool(atlas, Config.Parse("[Atlas]\nOrbHardware=false\n"), dir);
             pool.Prefetch();
             await pool.WhenIdleAsync();
             Assert.Equal("fake", atlas.LastMode); // OrbMode defaults to the noisy IBM chip snapshot
@@ -168,6 +173,42 @@ namespace QuantumGetaway.Tests
             await pool.WhenIdleAsync();
             Assert.True(pool.Draw().Fresh);
             Assert.Equal(2, atlas.Jobs);
+        }
+
+        [Fact]
+        public async Task IbmHardwareShotsTakeOverAndEachIsUsedOnce()
+        {
+            var dir = Path.Combine(Path.GetTempPath(), "qg-orbs-" + Guid.NewGuid().ToString("N"));
+            var atlas = new FakeGraph();
+            var pool = new OrbPool(atlas, Config.Parse(""), dir);
+            pool.Prefetch();
+            await pool.WhenIdleAsync();
+            Assert.Equal(2, atlas.Jobs); // the snapshot job and the hardware job run side by side
+
+            var first = pool.Draw();
+            Assert.Equal(ShotSource.IbmHardware, first.Source);
+            Assert.True(first.Fresh);
+            Assert.Equal("101010", first.Bits);
+            Assert.Equal(ShotSource.IbmHardware, pool.Draw().Source); // its 2nd (and last) shot
+            Assert.Equal(ShotSource.NoisyChip, pool.Draw().Source);   // used up: back to the snapshot
+            Assert.True(pool.TryDequeueNotice(out var notice));
+            Assert.Contains("ibm_test", notice);
+        }
+
+        [Fact]
+        public async Task UnavailableHardwareIsAnnouncedOnceAndPlayGoesOn()
+        {
+            var dir = Path.Combine(Path.GetTempPath(), "qg-orbs-" + Guid.NewGuid().ToString("N"));
+            var atlas = new FakeGraph { FailHardware = true };
+            var pool = new OrbPool(atlas, Config.Parse(""), dir);
+            pool.Prefetch();
+            await pool.WhenIdleAsync();
+            Assert.Equal(ShotSource.NoisyChip, pool.Draw().Source);
+            Assert.True(pool.TryDequeueNotice(out var notice));
+            Assert.Contains("unavailable", notice);
+            pool.Prefetch(); // within the 5 min backoff: no new hardware attempt
+            await pool.WhenIdleAsync();
+            Assert.False(pool.TryDequeueNotice(out _));
         }
 
         [Fact]

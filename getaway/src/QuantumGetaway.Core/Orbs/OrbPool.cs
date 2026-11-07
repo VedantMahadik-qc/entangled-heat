@@ -23,6 +23,7 @@ namespace QuantumGetaway.Core.Orbs
         static readonly TimeSpan HardwareTimeout = TimeSpan.FromMinutes(30);
         static readonly TimeSpan FailureBackoff = TimeSpan.FromSeconds(30);
         static readonly TimeSpan ModeFallbackTime = TimeSpan.FromMinutes(5);
+        static readonly TimeSpan HardwareBackoff = TimeSpan.FromMinutes(5);
         const string CacheName = "orbs.json";
 
         readonly IAtlasClient _client;
@@ -42,6 +43,13 @@ namespace QuantumGetaway.Core.Orbs
         DateTime _simulatorUntil; // the configured mode failed: use the plain simulator until then
         bool _fallbackAnnounced;
         int _jobsCompleted;
+
+        // Real IBM hardware runs alongside: while its 1024 shots last, they win over the simulator/snapshot.
+        ShotDeck _hardware;
+        bool _hardwareBusy;
+        DateTime _hardwareRetryAfter;
+        bool _hardwareAnnounced;
+        bool _hardwareFailAnnounced;
 
         /// <param name="client">Null when there is no API key: only cached results are used.</param>
         public OrbPool(IAtlasClient client, Config config, string cacheDir)
@@ -64,19 +72,37 @@ namespace QuantumGetaway.Core.Orbs
             var now = DateTime.UtcNow;
             lock (_gate)
             {
-                if (_ready != null || _busy || now < _retryAfter)
-                    return;
-                _busy = true;
-                var mode = now < _simulatorUntil ? "emu" : _config.OrbMode;
-                Track(FetchAsync(mode));
+                if (_ready == null && !_busy && now >= _retryAfter)
+                {
+                    _busy = true;
+                    var mode = now < _simulatorUntil ? "emu" : _config.OrbMode;
+                    Track(FetchAsync(mode));
+                }
+                // One IBM job at a time; the next starts when the current deck runs low.
+                if (_config.OrbHardware && _config.OrbMode != "qpu" && !_hardwareBusy && now >= _hardwareRetryAfter
+                    && (_hardware == null || _hardware.RunningLow))
+                {
+                    _hardwareBusy = true;
+                    Track(FetchHardwareAsync());
+                }
             }
         }
 
-        /// <summary>Next real shot: a new job if one is ready, else another shot of the last job, else the cache.</summary>
+        /// <summary>
+        /// Next real shot: an IBM hardware shot while a hardware deck lasts, else a new job if one is
+        /// ready, else another shot of the last job, else the cache. Every shot is handed out once.
+        /// </summary>
         public Shot Draw()
         {
             lock (_gate)
             {
+                if (_hardware != null)
+                {
+                    var real = _hardware.Draw();
+                    if (real != null)
+                        return real;
+                    _hardware = null;
+                }
                 if (_ready != null)
                 {
                     _last = _ready;
@@ -104,6 +130,54 @@ namespace QuantumGetaway.Core.Orbs
         {
             lock (_gate)
                 return Task.WhenAll(_inFlight.ToArray());
+        }
+
+        async Task FetchHardwareAsync()
+        {
+            try
+            {
+                // No backend name: Atlas picks the least busy IBM chip.
+                var request = OrbPairs.PairGraph("qpu", null);
+                var result = await _client.RunAsync(OrbPairs.Engine, request, null, HardwareTimeout, _cts.Token).ConfigureAwait(false);
+                var counts = MeasurementParser.ParseCounts(result.Body, OrbPairs.Qubits);
+                if (counts.Count == 0)
+                    throw new AtlasException($"job {result.JobId}: no measurements found in result");
+                var chip = (string)result.Body.SelectToken("$..backend") ?? "IBM";
+                var deck = new ShotDeck(counts, result.JobId, ShotSource.IbmHardware, NewRng());
+                bool announce;
+                lock (_gate)
+                {
+                    _hardware = deck;
+                    announce = !_hardwareAnnounced;
+                    _hardwareAnnounced = true;
+                }
+                SaveCache(ShotSource.IbmHardware, result.JobId, counts);
+                var jobs = Interlocked.Increment(ref _jobsCompleted);
+                Log.Info($"{OrbPairs.Engine} qpu: job {result.JobId} on {chip}, {deck.Total} shots, {result.Elapsed.TotalSeconds:0}s (#{jobs} this session)");
+                if (announce)
+                    _notices.Enqueue($"~y~Real IBM quantum hardware~s~ ({chip}) results arrived: orb pairs and twin exits are now measured on a real quantum computer.");
+            }
+            catch (OperationCanceledException)
+            {
+            }
+            catch (Exception ex)
+            {
+                Log.Error($"{OrbPairs.Engine} qpu: {ex.Message}");
+                bool announce;
+                lock (_gate)
+                {
+                    _hardwareRetryAfter = DateTime.UtcNow + HardwareBackoff;
+                    announce = !_hardwareFailAnnounced && !_hardwareAnnounced;
+                    _hardwareFailAnnounced = true;
+                }
+                if (announce)
+                    _notices.Enqueue("~o~IBM quantum hardware unavailable right now~s~: orbs use the noisy chip snapshot. Retrying in 5 min.");
+            }
+            finally
+            {
+                lock (_gate)
+                    _hardwareBusy = false;
+            }
         }
 
         async Task FetchAsync(string mode)

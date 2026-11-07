@@ -96,7 +96,8 @@ namespace QuantumGetaway.Core.Atlas
 
             // Hardware jobs queue for minutes to hours; poll them gently.
             var machine = (string)parameters["machine"] ?? "";
-            var poll = machine.StartsWith("ibm_") || machine == "least_busy" ? TimeSpan.FromSeconds(15) : TimeSpan.FromSeconds(1);
+            var hardware = machine.StartsWith("ibm_") || machine == "least_busy" || (string)parameters["mode"] == "qpu";
+            var poll = hardware ? TimeSpan.FromSeconds(10) : TimeSpan.FromSeconds(1);
             while (true)
             {
                 var status = await SendAsync(HttpMethod.Get, $"api/v1/jobs/{jobId}/status", null, ct).ConfigureAwait(false);

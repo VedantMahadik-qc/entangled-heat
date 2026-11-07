@@ -387,6 +387,27 @@ namespace QuantumGetaway.Tests
             Console.WriteLine(File.ReadAllText(Path.Combine(dir, "QuantumGetaway.log")));
         }
 
+        /// <summary>A real IBM hardware job (queues vary). Runs only with QG_LIVE_QPU=1.</summary>
+        [Fact]
+        public async Task RealIbmHardwareOrbJob()
+        {
+            var key = Environment.GetEnvironmentVariable("MOTH_API_KEY");
+            if (Environment.GetEnvironmentVariable("QG_LIVE_QPU") != "1" || string.IsNullOrWhiteSpace(key))
+                return;
+            var dir = Path.Combine(Path.GetTempPath(), "qg-live-qpu-" + Guid.NewGuid().ToString("N"));
+            Directory.CreateDirectory(dir);
+            Log.Init(Path.Combine(dir, "QuantumGetaway.log"));
+            using (var pool = new QuantumGetaway.Core.Orbs.OrbPool(new AtlasClient("https://api.mothquantum.com", key), Config.Parse(""), dir))
+            {
+                pool.Prefetch();
+                await pool.WhenIdleAsync();
+                var shot = pool.Draw();
+                Assert.Equal(ShotSource.IbmHardware, shot.Source);
+                Console.WriteLine($"live: IBM hardware job {shot.JobId} first shot |{shot.Bits}>");
+            }
+            Console.WriteLine(File.ReadAllText(Path.Combine(dir, "QuantumGetaway.log")));
+        }
+
         [Fact]
         public async Task RealOrbPairJob()
         {
