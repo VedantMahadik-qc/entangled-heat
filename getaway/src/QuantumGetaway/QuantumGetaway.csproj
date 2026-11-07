@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- The GTA V script. Loaded by ScriptHookVDotNet 3 from <GTA V>\scripts\. -->
+  <PropertyGroup>
+    <TargetFramework>net48</TargetFramework>
+    <LangVersion>9.0</LangVersion>
+    <Nullable>disable</Nullable>
+    <PlatformTarget>x64</PlatformTarget>
+    <RootNamespace>QuantumGetaway</RootNamespace>
+    <AssemblyName>QuantumGetaway</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- SHVDN is provided by the game install; compile against it but don't ship it. -->
+    <PackageReference Include="ScriptHookVDotNet3" Version="3.6.0" ExcludeAssets="runtime" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.3" PrivateAssets="all" />
+  </ItemGroup>
+  <ItemGroup>
+    <!-- KeyDown events use System.Windows.Forms.Keys (part of .NET Framework, nothing to ship). -->
+    <Reference Include="System.Windows.Forms" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\QuantumGetaway.Core\QuantumGetaway.Core.csproj" />
+  </ItemGroup>
+</Project>
