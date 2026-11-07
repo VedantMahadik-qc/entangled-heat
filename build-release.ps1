@@ -1,7 +1,7 @@
 # Builds the Entangled Heat release zip: release\EntangledHeat-<version>.zip
 # Usage (from the project root):  powershell -ExecutionPolicy Bypass -File build-release.ps1 [-Version 0.1.0]
 # Refresh the seed cache first if needed:  python src/tools/atlas_probe.py seed
-param([string]$Version = "0.1.0")
+param([string]$Version = "0.2.0")
 $ErrorActionPreference = "Stop"
 
 $root = $PSScriptRoot
@@ -12,6 +12,12 @@ if (-not $dotnet) { $dotnet = Join-Path $env:LOCALAPPDATA "Microsoft\dotnet\dotn
 if ($LASTEXITCODE -ne 0) { throw "build failed" }
 & $dotnet test (Join-Path $root "src\EntangledHeat.Tests") -c Release --no-build --nologo -v quiet
 if ($LASTEXITCODE -ne 0) { throw "tests failed" }
+# The getaway half (portals + entangled orbs) lives in getaway\ and ships in the same zip.
+$getaway = Join-Path $root "getaway"
+& $dotnet build (Join-Path $getaway "src\QuantumGetaway.sln") -c Release --nologo -v quiet
+if ($LASTEXITCODE -ne 0) { throw "getaway build failed" }
+& $dotnet test (Join-Path $getaway "src\QuantumGetaway.Tests") -c Release --no-build --nologo -v quiet
+if ($LASTEXITCODE -ne 0) { throw "getaway tests failed" }
 
 $stage = Join-Path $root "release\EntangledHeat-$Version"
 $scripts = Join-Path $stage "scripts"
@@ -30,6 +36,19 @@ Copy-Item (Join-Path $root "config\EntangledHeat.example.ini") (Join-Path $scrip
 $seed = Get-ChildItem (Join-Path $root "seed-cache") -Filter *.json
 if ($seed.Count -lt 6) { throw "seed-cache is incomplete; run: python src/tools/atlas_probe.py seed" }
 $seed | Copy-Item -Destination $cache
+
+# Portals and entangled orbs: their script, Core library, config (empty key: it uses
+# EntangledHeat.ini's) and real Atlas jobs (blur-v1 and graph-v1) for the first run.
+$gbin = Join-Path $getaway "src\QuantumGetaway\bin\Release\net48"
+foreach ($dll in "QuantumGetaway.dll", "QuantumGetaway.Core.dll") {
+    Copy-Item (Join-Path $gbin $dll) $scripts
+}
+Copy-Item (Join-Path $getaway "config\QuantumGetaway.example.ini") (Join-Path $scripts "QuantumGetaway.ini")
+$gcache = Join-Path $scripts "QuantumGetaway\cache"
+New-Item -ItemType Directory -Force $gcache | Out-Null
+foreach ($name in "leap.json", "orbs.json") {
+    Copy-Item (Join-Path $getaway "seed-cache\$name") $gcache
+}
 Copy-Item (Join-Path $root "docs\INSTALL.md") $stage
 @"
 Entangled Heat $Version uses Newtonsoft.Json (MIT licence, https://www.newtonsoft.com/json).
