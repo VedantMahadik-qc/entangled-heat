@@ -1,6 +1,7 @@
 # Secrets - never commit the real API key
 EntangledHeat.ini
 SchrodingersStash.ini
+QuantumGetaway.ini
 *.env
 .env*
 
@@ -17,3 +18,7 @@ release/
 *.mkv
 __pycache__/
 docs/samples/*.tmp
+# Probe scratch (the JSON and the raw Atlas PNGs are kept)
+getaway/docs/samples/*.npy
+getaway/docs/samples/*-in.png
+getaway/docs/samples/*-out.png

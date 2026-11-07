@@ -1,0 +1,28 @@
+{
+ "job_id": "7c8eb7bb-9953-435b-a388-df3545a33db5",
+ "params": {
+  "strength": 0.8,
+  "style": "rx",
+  "size": 32,
+  "reach": 0.7
+ },
+ "seconds": 4.590586000005715,
+ "pixel": [
+  15,
+  0
+ ],
+ "result": {
+  "$schema": "https://api.mothquantum.com/schemas/JobResultOutputBody.json",
+  "outputs": [
+   {
+    "slot": "result",
+    "output_asset_id": "9f5817d5-927e-45d5-9331-90e8b1511655",
+    "url": "<presigned download URL removed (expired 1 h after the job)>",
+    "expires_at": "2026-11-07T19:24:30.96687346Z",
+    "content_type": "image/png",
+    "filename": "blur-v1-7c8eb7bb.png",
+    "size_bytes": 426
+   }
+  ]
+ }
+}
