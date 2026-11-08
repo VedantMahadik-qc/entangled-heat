@@ -46,6 +46,7 @@ namespace QuantumGetaway.Core.Orbs
 
         // Real IBM hardware runs alongside: while its 1024 shots last, they win over the simulator/snapshot.
         ShotDeck _hardware;
+        string _hardwareChip;
         bool _hardwareBusy;
         DateTime _hardwareRetryAfter;
         bool _hardwareAnnounced;
@@ -122,6 +123,22 @@ namespace QuantumGetaway.Core.Orbs
             }
         }
 
+        /// <summary>Where the next orb or twin result will come from, for the HUD. chip is the IBM chip's name for hardware.</summary>
+        public ShotSource NextSource(out string chip)
+        {
+            lock (_gate)
+            {
+                chip = null;
+                if (_hardware != null && _hardware.Remaining > 0)
+                {
+                    chip = _hardwareChip;
+                    return ShotSource.IbmHardware;
+                }
+                var deck = _ready ?? _last;
+                return deck != null && deck.Remaining > 0 ? deck.Source : ShotSource.OfflineCache;
+            }
+        }
+
         /// <summary>Messages for the game, e.g. "noisy chip unavailable". Call from the game thread.</summary>
         public bool TryDequeueNotice(out string notice) => _notices.TryDequeue(out notice);
 
@@ -148,6 +165,7 @@ namespace QuantumGetaway.Core.Orbs
                 lock (_gate)
                 {
                     _hardware = deck;
+                    _hardwareChip = chip;
                     announce = !_hardwareAnnounced;
                     _hardwareAnnounced = true;
                 }

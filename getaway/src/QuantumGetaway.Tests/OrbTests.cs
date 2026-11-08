@@ -189,7 +189,13 @@ namespace QuantumGetaway.Tests
             Assert.Equal(ShotSource.IbmHardware, first.Source);
             Assert.True(first.Fresh);
             Assert.Equal("101010", first.Bits);
-            Assert.Equal(ShotSource.IbmHardware, pool.Draw().Source); // its 2nd (and last) shot
+            Assert.Equal("new job orbs-2, shot 1/2", first.JobLabel);
+            Assert.Equal(ShotSource.IbmHardware, pool.NextSource(out var chip));
+            Assert.Equal("ibm_test", chip);
+            var second = pool.Draw();
+            Assert.Equal(ShotSource.IbmHardware, second.Source); // its 2nd (and last) shot
+            Assert.Equal("job orbs-2, shot 2/2", second.JobLabel);
+            Assert.Equal(ShotSource.NoisyChip, pool.NextSource(out _));
             Assert.Equal(ShotSource.NoisyChip, pool.Draw().Source);   // used up: back to the snapshot
             Assert.True(pool.TryDequeueNotice(out var notice));
             Assert.Contains("ibm_test", notice);

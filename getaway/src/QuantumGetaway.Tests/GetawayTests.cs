@@ -209,6 +209,14 @@ namespace QuantumGetaway.Tests
         }
 
         [Fact]
+        public void ShowsRealHardwareOnScreen()
+        {
+            var line = GetawayHud.Line(AtlasStatus.Connected, "L3", 1, 3, false, null, 0, GetawayHud.Orbs(ShotSource.IbmHardware, "ibm_pittsburgh"));
+            Assert.Contains("ORBS: ~y~IBM HARDWARE (ibm_pittsburgh)", line);
+            Assert.Contains("NOISY CHIP", GetawayHud.Orbs(ShotSource.NoisyChip, null));
+        }
+
+        [Fact]
         public void TellsYouToFindAnOrbWhenEmpty()
         {
             var line = GetawayHud.Line(AtlasStatus.Connected, "T", 0, 3, false, null, 0);

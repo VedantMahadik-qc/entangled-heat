@@ -8,13 +8,19 @@ namespace QuantumGetaway.Core.Orbs
     /// <summary>One measured outcome from an Atlas job. Bits[i] is qubit i (qubit 0 leftmost).</summary>
     public sealed class Shot
     {
-        public Shot(string bits, string jobId, ShotSource source, bool fresh = false)
+        public Shot(string bits, string jobId, ShotSource source, bool fresh = false, int number = 0, int total = 0)
         {
             Bits = bits;
             JobId = jobId;
             Source = source;
             Fresh = fresh;
+            Number = number;
+            Total = total;
         }
+
+        /// <summary>Which of the job's shots this is (1-based), and how many the job measured. 0 if unknown.</summary>
+        public int Number { get; }
+        public int Total { get; }
 
         public string Bits { get; }
         public string JobId { get; }
@@ -27,9 +33,18 @@ namespace QuantumGetaway.Core.Orbs
 
         public string ShortJobId => JobId == null ? "?" : JobId.Length <= 8 ? JobId : JobId.Substring(0, 8);
 
-        /// <summary>For notifications, e.g. "new job 1a2b3c4d", or "earlier job 1a2b3c4d" for another shot of a job already used.</summary>
-        public string JobLabel =>
-            Fresh ? $"new job {ShortJobId}" : Source == ShotSource.OfflineCache ? $"job {ShortJobId}" : $"earlier job {ShortJobId}";
+        /// <summary>
+        /// For notifications, e.g. "new job 1a2b3c4d, shot 1/1016" or "job 1a2b3c4d, shot 17/1016".
+        /// Every shot is handed out once, so the shot number shows this measurement wasn't reused.
+        /// </summary>
+        public string JobLabel
+        {
+            get
+            {
+                var job = Fresh ? $"new job {ShortJobId}" : Source == ShotSource.OfflineCache ? $"cached job {ShortJobId}" : $"job {ShortJobId}";
+                return Total > 0 ? $"{job}, shot {Number}/{Total}" : job;
+            }
+        }
 
         public string SourceLabel
         {
@@ -87,7 +102,8 @@ namespace QuantumGetaway.Core.Orbs
             if (_shots.Count == 0)
                 return null;
             var fresh = !Used && Source != ShotSource.OfflineCache;
-            return new Shot(_shots.Dequeue(), JobId, Source, fresh);
+            var number = Total - _shots.Count + 1;
+            return new Shot(_shots.Dequeue(), JobId, Source, fresh, number, Total);
         }
     }
 }

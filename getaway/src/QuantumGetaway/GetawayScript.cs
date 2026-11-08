@@ -18,10 +18,10 @@ using QuantumGetaway.Core.Tunnel;
 namespace QuantumGetaway
 {
     /// <summary>
-    /// Quantum Getaway: drive through glowing quantum orbs to collect portal charges. Press L3 (or T)
-    /// and a portal opens on the road ahead. Its exit is in superposition: faint ghost portals show
-    /// the likeliest places you'll come out, from the Quantum Blur (blur-v1) of you as one bright
-    /// pixel on a grid. Drive through and the exit is measured: you come out of one of them, still moving.
+    /// Quantum Getaway: drive through entangled quantum orbs (graph-v1) to collect portal charges.
+    /// Press L3 (or T) and a portal opens on the road ahead, with four labelled exits: two twin pairs
+    /// drawn from the Quantum Blur (blur-v1) of you as one bright pixel on a grid. Drive in and the
+    /// exit is measured: blur picks the pair, an entangled graph-v1 pair picks the twin.
     /// </summary>
     public class GetawayScript : Script
     {
@@ -346,7 +346,7 @@ namespace QuantumGetaway
                     Notification.Show($"~c~Both plain~s~: pair {orb.Pair} collapsed {bits}\nChip noise broke the entanglement. Real qubits make mistakes.{proof}");
                     break;
             }
-            Log.Info($"orb pair {orb.Pair} measured at side {orb.Side}: {result}, shot |{shot.Bits}> slot {slot} job {shot.JobId} ({shot.Source}{(shot.Fresh ? ", new job" : ", earlier job")})");
+            Log.Info($"orb pair {orb.Pair} measured at side {orb.Side}: {result}, shot |{shot.Bits}> slot {slot} job {shot.JobId} shot {shot.Number}/{shot.Total} ({shot.Source}{(shot.Fresh ? ", new job" : "")})");
         }
 
         void RemoveOrb(Orb orb)
@@ -587,7 +587,7 @@ namespace QuantumGetaway
                         break;
                 }
                 graphProof = $"\n~c~graph-v1 {shot.SourceLabel} · {shot.JobLabel}";
-                twinLog = $"twins |{shot.Bits.Substring(0, 2)}> {twin} job {shot.JobId} ({shot.Source}{(shot.Fresh ? ", new job" : ", earlier job")})";
+                twinLog = $"twins |{shot.Bits.Substring(0, 2)}> {twin} job {shot.JobId} shot {shot.Number}/{shot.Total} ({shot.Source}{(shot.Fresh ? ", new job" : "")})";
             }
             _last = new Landing(wave, new Cell(exit.Dx, exit.Dy, pairChance / 2), fresh);
 
@@ -828,7 +828,8 @@ namespace QuantumGetaway
             var show = _portal != null || now - _loadedAt < StartupHudTime || now - _lastPortalAt < AfterPortalHudTime || Game.Player.WantedLevel > 0;
             if (!show)
                 return;
-            _hud.Caption = GetawayHud.Line((AtlasStatus)_status, Button, _charges, _config.MaxCharges, _portal != null, _last, _lastMetres);
+            var orbSource = _orbPool.NextSource(out var chip);
+            _hud.Caption = GetawayHud.Line((AtlasStatus)_status, Button, _charges, _config.MaxCharges, _portal != null, _last, _lastMetres, GetawayHud.Orbs(orbSource, chip));
             _hud.Draw();
         }
 
