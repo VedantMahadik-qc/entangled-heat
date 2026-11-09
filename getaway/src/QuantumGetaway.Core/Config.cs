@@ -46,6 +46,7 @@ namespace QuantumGetaway.Core
 
         /// <summary>When you go through a portal while wanted, the police keep searching where you were.</summary>
         public bool ShakePolice { get; private set; } = true;
+        public bool ShowBlurMap { get; private set; } = true;
 
         public bool OfflineFallback { get; private set; } = true;
 
@@ -88,6 +89,7 @@ namespace QuantumGetaway.Core
             c.OrbsWanted = (int)Clamp(GetInt(ini, "Gameplay", "OrbsWanted", c.OrbsWanted), 0, 20);
             c.PortalSeconds = Clamp(GetFloat(ini, "Gameplay", "PortalSeconds", c.PortalSeconds), 2f, 30f);
             c.ShakePolice = GetBool(ini, "Gameplay", "ShakePolice", c.ShakePolice);
+            c.ShowBlurMap = GetBool(ini, "Gameplay", "ShowBlurMap", c.ShowBlurMap);
             c.OfflineFallback = GetBool(ini, "Gameplay", "OfflineFallback", c.OfflineFallback);
             return c;
         }

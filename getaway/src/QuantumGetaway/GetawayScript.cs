@@ -179,7 +179,7 @@ namespace QuantumGetaway
 
             DrawOrbs(player.Position);
             DrawPortal(now);
-            DrawBlurPanel(now);
+            if (_config.ShowBlurMap) DrawBlurPanel(now);
             if (_flashEndsAt != DateTime.MinValue && now >= _flashEndsAt)
             {
                 GTA.UI.Screen.StopEffect(ScreenEffect.SwitchShortNeutralIn);
