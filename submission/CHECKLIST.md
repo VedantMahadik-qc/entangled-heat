@@ -20,3 +20,7 @@ Form: https://airtable.com/appgKPB3bLcYRkoxF/pag7N57cFSLvrxUJy/form. **Deadline 
 - [ ] INSTALL.md is included in the zip
 - [ ] The video opens with the hook and shows quantum results changing gameplay
 - [ ] The write-up names each engine and what it controls
+
+## Status (9 Nov 2026)
+- **Quantum Getaway submitted** at 23:27 UK: Drive video + zip, screenshots in `screenshots/`, repo made public.
+- Entangled Heat 0.2.0 (main entry): footage of the police features pending.
